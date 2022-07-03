@@ -1,4 +1,4 @@
-from requests import get
+import grequests
 from dotenv import load_dotenv
 import os
 
@@ -9,10 +9,20 @@ headers = {
     "GROCY-API-KEY": os.environ.get("API_KEY")
 }
 
-shopping_list = get(f"{BASE_URL}/objects/shopping_list", headers=headers).json()
-units = get(f"{BASE_URL}/objects/quantity_units", headers=headers).json()
-products = get(f"{BASE_URL}/objects/products", headers=headers).json()
-product_groups = get(f"{BASE_URL}/objects/product_groups", headers=headers).json()
+urls = [
+    "/objects/shopping_list",
+    "/objects/quantity_units",
+    "/objects/products",
+    "/objects/product_groups"
+]
+
+rs = (grequests.get(f"{BASE_URL}{u}", headers=headers) for u in urls)
+map = grequests.map(rs)
+
+shopping_list = map[0].json()
+units = map[1].json()
+products = map[2].json()
+product_groups = map[3].json()
 
 parsed_units = {}
 for item in units:
@@ -20,7 +30,9 @@ for item in units:
 
 parsed_products = {}
 for item in products:
-    parsed_products[item["id"]] = {"name": item["name"], "product_group_id": item["product_group_id"]}
+    parsed_products[item["id"]] = {"name": item["name"], "product_group_id": item["product_group_id"],
+                                   "conversion_rate": item["qu_factor_purchase_to_stock"],
+                                   "qu_id_purchase": item["qu_id_purchase"]}
 
 parsed_product_groups = {}
 for item in product_groups:
@@ -46,7 +58,7 @@ for item in compressed_list.items():
 
 data = ""
 for item in pretty_list.items():
-    data = data + item[0] + "," + str(item[1]["amount"]) + "," + item[1]["unit"] + "," + item[1]["product_group"] + "\n"
+    data = data + item[0] + "," + str(round(item[1]["amount"])) + "," + item[1]["unit"] + "," + item[1]["product_group"] + "\n"
 
 with open("shopping_list.csv", "w") as f:
     f.write(data)
