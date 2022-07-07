@@ -1,7 +1,7 @@
 import grequests
 
 
-def export_shopping_list(base_url, api_key):
+def export_shopping_list(base_url, api_key, store):
     headers = {
         "GROCY-API-KEY": api_key
     }
@@ -30,7 +30,6 @@ def export_shopping_list(base_url, api_key):
         parsed_products[item["id"]] = {"name": item["name"], "product_group_id": item["product_group_id"],
                                        "conversion_rate": item["qu_factor_purchase_to_stock"],
                                        "qu_id_purchase": item["qu_id_purchase"]}
-
     parsed_product_groups = {}
     for item in product_groups:
         parsed_product_groups[item["id"]] = item["name"]
@@ -52,15 +51,24 @@ def export_shopping_list(base_url, api_key):
         product_group_id = product["product_group_id"]
         if product_group_id != "":
             product_group = parsed_product_groups[product_group_id]
-        #amount = item[1]["amount"] / float(product["conversion_rate"])
-        #unit = parsed_units[product["qu_id_purchase"]]
+
+        conversion_rate = float(product["conversion_rate"])
         amount = item[1]["amount"]
         unit = parsed_units[item[1]["unit"]]
+        unit_store = parsed_units[product["qu_id_purchase"]]
+
+        if conversion_rate != 1 and unit != unit_store:
+            if conversion_rate > 1:
+                amount = amount / conversion_rate
+            else:
+                amount = amount * conversion_rate
+
+            unit = unit_store
 
         pretty_list[name] = {"amount": amount, "unit": unit, "product_group": product_group}
 
     data = ""
     for item in pretty_list.items():
-        data = data + item[0] + "," + str(round(item[1]["amount"])) + "," + item[1]["unit"] + "," + item[1]["product_group"] + "\n"
+        data = data + item[0] + "," + str(round(item[1]["amount"], 1)) + "," + item[1]["unit"] + "," + item[1]["product_group"] + "\n"
 
     return data
