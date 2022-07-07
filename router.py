@@ -30,7 +30,8 @@ def export_shopping_list_raw():
     params = request.args
     store = params.get("store", default="none", type=str)
 
-    return shopping_list.export_shopping_list(BASE_URL, API_KEY, store)
+    return shopping_list.export_shopping_list(BASE_URL, API_KEY, store).replace('\n', '<br>')
+
 
 if __name__ == '__main__':
     app.run(port=5000)
