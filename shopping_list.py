@@ -58,11 +58,7 @@ def export_shopping_list(base_url, api_key, store):
         unit_store = parsed_units[product["qu_id_purchase"]]
 
         if conversion_rate != 1 and unit != unit_store:
-            if conversion_rate > 1:
-                amount = amount / conversion_rate
-            else:
-                amount = amount * conversion_rate
-
+            amount = amount / conversion_rate
             unit = unit_store
 
         pretty_list[name] = {"amount": amount, "unit": unit, "product_group": product_group}
