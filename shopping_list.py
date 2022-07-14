@@ -45,7 +45,7 @@ def export_shopping_list(base_url, api_key, store):
     pretty_list = {}
     for item in compressed_list.items():
         product = parsed_products[item[0]]
-        name = product["name"].replace("*", "")
+        name = "\"" + product["name"].replace("*", "") + "\""
 
         product_group = "None"
         product_group_id = product["product_group_id"]
