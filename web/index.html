@@ -18,9 +18,18 @@
 </head>
 
 <body class="center" style="background-color:#242526;">
-  <form action="http://localhost:5000/api/export_shopping_list">
-    <input class="button" type="submit" value="Export Shopping List" />
-</form>
+
+  <form action="/api/add_meal_plan_to_shopping_list" method="post">
+    <label for="start">Start Date:</label>
+    <input class="date" type="date" id="start" name="start-date" value="2022-01-01" min="2018-01-01">
+    <label for="end">End Date:</label>
+    <input class="date" type="date" id="end" name="end-date" value="2022-01-01" min="2018-01-01">
+    <input class="button" type="submit" value="Create Shopping List"/>
+  </form>
+
+  <form action="/api/export_shopping_list">
+    <input class="button" type="submit" value="Export Shopping List"/>
+  </form>
 
 
 </body>
