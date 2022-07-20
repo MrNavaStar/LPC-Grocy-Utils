@@ -39,7 +39,8 @@ h1 {
   box-sizing: border-box;
 }
 
-.button:hover {
+.button:hover,
+.little_button:hover {
     background-color: #4CAF30;
 }
 
