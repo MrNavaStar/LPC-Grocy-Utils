@@ -1,4 +1,43 @@
 import grequests
+from datetime import datetime
+from requests import post
+
+def add_meal_plan_to_shopping_list(base_url, api_key):
+    headers = {
+        "GROCY-API-KEY": api_key,
+        "Content-Type": "application/json"
+    }
+
+    urls = [
+        "/objects/meal_plan"
+    ]
+
+    rs = (grequests.get(f"{base_url}{u}", headers=headers) for u in urls)
+    map = grequests.map(rs)
+
+    meal_plans = map[0].json()
+
+    start_date = datetime.strptime("2022-07-17", "%Y-%m-%d")
+    end_date = datetime.strptime("2022-07-23", "%Y-%m-%d")
+
+    recipe_ids = []
+    for recipe in meal_plans:
+        date = datetime.strptime(recipe["day"], "%Y-%m-%d")
+        if end_date >= date >= start_date:
+            if recipe["type"] == "recipe":
+                recipe_ids.append(recipe["recipe_id"])
+
+    data = {
+        "excludedProductIds": [
+            0
+        ]
+    }
+
+    for recipe_id in recipe_ids:
+        rs = post(f"{base_url}/recipes/{recipe_id}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
+        print(f"added Recipe {recipe_id} to shopping list!")
+
+    return meal_plans
 
 
 def export_shopping_list(base_url, api_key, store):

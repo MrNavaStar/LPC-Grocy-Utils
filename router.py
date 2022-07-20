@@ -1,6 +1,6 @@
 import os
 from datetime import date
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, jsonify
 import shopping_list
 from dotenv import load_dotenv
 
@@ -23,6 +23,11 @@ def export_shopping_list():
     data = shopping_list.export_shopping_list(BASE_URL, API_KEY, store)
     d = str(date.today())
     return Response(data, mimetype="text/plain", headers={"Content-Disposition": f"attachment;filename=shopping_list_" + d + ".csv"})
+
+
+@app.route("/api/raw/add_meal_plan_to_shopping_list", methods=['GET'])
+def add_meal_plan_to_shopping_list_raw():
+    return jsonify(shopping_list.add_meal_plan_to_shopping_list(BASE_URL, API_KEY))
 
 
 @app.route("/api/raw/export_shopping_list", methods=['GET'])
