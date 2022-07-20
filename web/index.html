@@ -19,18 +19,75 @@
 
 <body class="center" style="background-color:#242526;">
 
-  <form action="/api/add_meal_plan_to_shopping_list" method="post">
-    <label for="start">Start Date:</label>
-    <input class="date" type="date" id="start" name="start-date" value="2022-01-01" min="2018-01-01">
-    <label for="end">End Date:</label>
-    <input class="date" type="date" id="end" name="end-date" value="2022-01-01" min="2018-01-01">
-    <input class="button" type="submit" value="Create Shopping List"/>
-  </form>
+  <h1>LPC Grocy Utilities</h1>
+  <button class="button" id="createShoppingListButton">Create Shopping List</button>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close"></span>
+
+      <div id="myProgress">
+        <div id="myBar"></div>
+      </div>
+
+      <div class="modal-body">
+        <form id="add_to_shoppinglist" action="/api/add_meal_plan_to_shopping_list" method="post">
+          <label for="start">Start Date:</label>
+          <input class="date" type="date" id="start" name="start-date" min="2018-01-01">
+          <label for="end">End Date:</label>
+          <input class="date" type="date" id="end" name="end-date" min="2018-01-01">
+          <input class="little_button" type="submit" value="Create"/>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("createShoppingListButton");
+  var span = document.getElementsByClassName("close")[0];
+
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  $('form#add_to_shoppinglist').submit(function(){
+    $(this).find(':input[type=submit]').prop('disabled', true);
+  });
+
+  var i = 0;
+  function move() {
+    if (i == 0) {
+      i = 1;
+      var elem = document.getElementById("myBar");
+      var width = 1;
+      var id = setInterval(frame, 10);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+          i = 0;
+        } else {
+          width++;
+          elem.style.width = width + "%";
+        }
+      }
+    }
+  }
+  </script>
 
   <form action="/api/export_shopping_list">
     <input class="button" type="submit" value="Export Shopping List"/>
   </form>
-
 
 </body>
 </html>

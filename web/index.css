@@ -1,18 +1,32 @@
+h1 {
+    color: white;
+    padding: 15px 32px;
+    font-size: 100px;
+    font-family: Arial, sans-serif;
+}
+
 .button {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
+  width: 60%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 100px;
   margin-bottom: 35px;
+  font-family: Arial, sans-serif;
 }
 
-input[type=text] {
-  padding:10px;
-  margin:10px 0; // add top and bottom margin
+.little_button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
 }
 
 .date {
@@ -30,6 +44,80 @@ input[type=text] {
 }
 
 .center {
-  margin-top: 250px;
   text-align: center;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body {
+    padding: 2px 16px;
+    background-color: #242526;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #242526;
+}
+
+#myBar {
+  width: 1%;
+  height: 5px;
+  background-color: #4CAF50;
 }

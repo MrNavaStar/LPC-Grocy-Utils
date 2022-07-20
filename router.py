@@ -28,8 +28,10 @@ def export_shopping_list():
 @app.route("/api/add_meal_plan_to_shopping_list", methods=['POST'])
 def add_meal_plan_to_shopping_list_raw():
     form_data = request.form
-    shopping_list.add_meal_plan_to_shopping_list(BASE_URL, API_KEY, form_data["start-date"], form_data["end-date"])
+    result = shopping_list.add_meal_plan_to_shopping_list(BASE_URL, API_KEY, form_data["start-date"], form_data["end-date"])
 
+    if result == "Bad Date":
+        return "You Must Enter a Valid Date"
     return redirect("/")
 
 
