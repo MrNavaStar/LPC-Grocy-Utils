@@ -78,22 +78,22 @@ def export_shopping_list(base_url, api_key, store):
         product = parsed_products[item[0]]
         if product["store_id"] == store:
             name = "\"" + product["name"].replace("*", "") + "\""
+            if name.lower() != "water":
+                product_group = "None"
+                product_group_id = product["product_group_id"]
+                if product_group_id != "":
+                    product_group = parsed_product_groups[product_group_id]
 
-            product_group = "None"
-            product_group_id = product["product_group_id"]
-            if product_group_id != "":
-                product_group = parsed_product_groups[product_group_id]
+                conversion_rate = float(product["conversion_rate"])
+                amount = item[1]["amount"]
+                unit = parsed_units[item[1]["unit"]]
+                unit_store = parsed_units[product["qu_id_purchase"]]
 
-            conversion_rate = float(product["conversion_rate"])
-            amount = item[1]["amount"]
-            unit = parsed_units[item[1]["unit"]]
-            unit_store = parsed_units[product["qu_id_purchase"]]
+                if unit != unit_store:
+                    amount = amount / conversion_rate
+                    unit = unit_store
 
-            if unit != unit_store:
-                amount = amount / conversion_rate
-                unit = unit_store
-
-            pretty_list[name] = {"amount": amount, "unit": unit, "product_group": product_group}
+                pretty_list[name] = {"amount": amount, "unit": unit, "product_group": product_group}
 
     data = ""
     for item in pretty_list.items():
