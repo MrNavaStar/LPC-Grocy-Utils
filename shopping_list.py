@@ -1,4 +1,3 @@
-import grequests
 from requests import get
 from datetime import datetime
 from requests import post, put
@@ -43,20 +42,10 @@ def export_shopping_list(base_url, api_key, store):
         "Content-Type": "application/json"
     }
 
-    urls = [
-        "/objects/shopping_list",
-        "/objects/quantity_units",
-        "/objects/products",
-        "/objects/product_groups"
-    ]
-
-    rs = (grequests.get(f"{base_url}{u}", headers=headers) for u in urls)
-    map = grequests.map(rs)
-
-    shopping_list = map[0].json()
-    units = map[1].json()
-    products = map[2].json()
-    product_groups = map[3].json()
+    shopping_list = get(f"{base_url}/objects/shopping_list", headers=headers).json()
+    units = get(f"{base_url}/objects/quantity_units", headers=headers).json()
+    products = get(f"{base_url}/objects/products", headers=headers).json()
+    product_groups = get(f"{base_url}/objects/product_groups", headers=headers).json()
 
     parsed_units = {}
     for item in units:
