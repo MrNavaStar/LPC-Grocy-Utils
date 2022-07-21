@@ -21,8 +21,9 @@
 
   <h1>LPC Grocy Utilities</h1>
   <button class="button" id="createShoppingListButton">Create Shopping List</button>
+  <button class="button" id="exportShoppingListButton">Export Shopping List</button>
 
-  <div id="myModal" class="modal">
+  <div id="createShoppingListModal" class="modal">
     <div class="modal-content">
       <span class="close"></span>
 
@@ -42,22 +43,47 @@
     </div>
   </div>
 
+  <div id="exportShoppingListModal" class="modal">
+    <div class="modal-content">
+      <span class="close"></span>
+
+      <div class="modal-body">
+        <form action="/api/export_shopping_list" method="post">
+          <select name="store_id" class="selectpicker form-control">
+              {% for store in stores %}
+              <option value="{{ store.id }}">{{ store.name }}</option>
+              {% endfor %}
+          </select>
+          <input class="little_button" type="submit" value="Export"/>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script>
-  var modal = document.getElementById("myModal");
-  var btn = document.getElementById("createShoppingListButton");
+  var create_modal = document.getElementById("createShoppingListModal");
+  var create_btn = document.getElementById("createShoppingListButton");
+
+  var export_modal = document.getElementById("exportShoppingListModal");
+  var export_btn = document.getElementById("exportShoppingListButton");
+
   var span = document.getElementsByClassName("close")[0];
 
-  btn.onclick = function() {
-    modal.style.display = "block";
+  create_btn.onclick = function() {
+    create_modal.style.display = "block";
   }
 
-  span.onclick = function() {
-    modal.style.display = "none";
+  export_btn.onclick = function() {
+    export_modal.style.display = "block";
   }
 
+  span.onclick = function() { modal.style.display = "none"; }
   window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+    if (event.target == create_modal) {
+      create_modal.style.display = "none";
+    }
+    if (event.target == export_modal) {
+      export_modal.style.display = "none";
     }
   }
 
@@ -84,10 +110,5 @@
     }
   }
   </script>
-
-  <form action="/api/export_shopping_list">
-    <input class="button" type="submit" value="Export Shopping List"/>
-  </form>
-
 </body>
 </html>

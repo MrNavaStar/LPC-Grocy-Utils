@@ -12,15 +12,13 @@ app = Flask("grocy-python", template_folder="web", static_folder="web")
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", stores=shopping_list.get_stores(BASE_URL, API_KEY))
 
 
-@app.route("/api/export_shopping_list", methods=['GET'])
+@app.route("/api/export_shopping_list", methods=['POST'])
 def export_shopping_list():
-    params = request.args
-    store = params.get("store", default="none", type=str)
-
-    data = shopping_list.export_shopping_list(BASE_URL, API_KEY, store)
+    form_data = request.form
+    data = shopping_list.export_shopping_list(BASE_URL, API_KEY, form_data["store_id"])
     d = str(date.today())
     return Response(data, mimetype="text/plain", headers={"Content-Disposition": f"attachment;filename=shopping_list_" + d + ".csv"})
 
@@ -33,14 +31,6 @@ def add_meal_plan_to_shopping_list_raw():
     if result == "Bad Date":
         return "You Must Enter a Valid Date"
     return redirect("/")
-
-
-@app.route("/api/raw/export_shopping_list", methods=['GET'])
-def export_shopping_list_raw():
-    params = request.args
-    store = params.get("store", default="none", type=str)
-
-    return shopping_list.export_shopping_list(BASE_URL, API_KEY, store).replace('\n', '<br>')
 
 
 if __name__ == '__main__':
