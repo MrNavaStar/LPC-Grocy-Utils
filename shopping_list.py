@@ -10,30 +10,26 @@ def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
         "Content-Type": "application/json"
     }
 
-    meal_plans = get(f"{base_url}/objects/meal_plan", headers=headers).json()
+    data = {
+        "excludedProductIds": [
+            0
+        ]
+    }
+
     try:
         start_date = datetime.strptime(start_date, "%Y-%m-%d")
         end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        meal_plans = get(f"{base_url}/objects/meal_plan", headers=headers).json()
 
-        recipe_ids = []
         for recipe in meal_plans:
             date = datetime.strptime(recipe["day"], "%Y-%m-%d")
             if end_date >= date >= start_date:
                 if recipe["type"] == "recipe":
-                    recipe_ids.append(recipe["recipe_id"])
+                    post(f"{base_url}/recipes/{recipe['id']}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
+                    print(f"added Recipe {recipe['id']} to shopping list!")
 
-        data = {
-            "excludedProductIds": [
-                0
-            ]
-        }
-
-        for recipe_id in recipe_ids:
-            rs = post(f"{base_url}/recipes/{recipe_id}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
-            print(f"added Recipe {recipe_id} to shopping list!")
     except ValueError:
         return "Bad Date"
-
     return None
 
 
