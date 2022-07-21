@@ -1,7 +1,7 @@
 import grequests
 from requests import get
 from datetime import datetime
-from requests import post
+from requests import post, put
 
 
 def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
@@ -25,8 +25,12 @@ def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
             date = datetime.strptime(recipe["day"], "%Y-%m-%d")
             if end_date >= date >= start_date:
                 if recipe["type"] == "recipe":
-                    post(f"{base_url}/recipes/{recipe['id']}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
-                    print(f"added Recipe {recipe['id']} to shopping list!")
+                    recipe_id = recipe["recipe_id"]
+                    recipe_data = {"desired_servings": str(recipe['recipe_servings'])}
+
+                    put(f"{base_url}/objects/recipes/{recipe_id}", json=recipe_data, headers=headers)
+                    post(f"{base_url}/recipes/{recipe_id}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
+                    print(f"added Recipe {recipe_id} for {recipe_data['desired_servings']} servings to shopping list!")
 
     except ValueError:
         return "Bad Date"
@@ -35,7 +39,8 @@ def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
 
 def export_shopping_list(base_url, api_key, store):
     headers = {
-        "GROCY-API-KEY": api_key
+        "GROCY-API-KEY": api_key,
+        "Content-Type": "application/json"
     }
 
     urls = [

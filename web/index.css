@@ -8,6 +8,7 @@ h1 {
 .button {
   background-color: #4CAF50; /* Green */
   border: none;
+  border-radius: 10px;
   color: white;
   padding: 15px 32px;
   width: 60%;
@@ -22,6 +23,7 @@ h1 {
 .little_button {
   background-color: #4CAF50; /* Green */
   border: none;
+  border-radius: 5px;
   color: white;
   text-align: center;
   text-decoration: none;
