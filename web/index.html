@@ -51,7 +51,7 @@
         <form action="/api/export_shopping_list" method="post">
           <select name="store_id" class="selectpicker form-control">
               {% for store in stores %}
-              <option value="{{ store.id }}">{{ store.name }}</option>
+              <option value="{{ store.id + ':' + store.name }}">{{ store.name }}</option>
               {% endfor %}
           </select>
           <input class="little_button" type="submit" value="Export"/>

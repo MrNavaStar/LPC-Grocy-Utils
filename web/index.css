@@ -33,7 +33,7 @@ h1 {
 
 .date {
   width: 20%;
-  padding: 12px 20px;
+  padding: 13px 20px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
@@ -123,4 +123,9 @@ h1 {
   width: 1%;
   height: 5px;
   background-color: #4CAF50;
+}
+
+.selectpicker {
+    padding: 4px 5px;
+    margin: 10px;
 }

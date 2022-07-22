@@ -17,10 +17,10 @@ def index():
 
 @app.route("/api/export_shopping_list", methods=['POST'])
 def export_shopping_list():
-    form_data = request.form
-    data = shopping_list.export_shopping_list(BASE_URL, API_KEY, form_data["store_id"])
+    form_data = request.form["store_id"].split(":")
+    data = shopping_list.export_shopping_list(BASE_URL, API_KEY, form_data[0])
     d = str(date.today())
-    return Response(data, mimetype="text/plain", headers={"Content-Disposition": f"attachment;filename=shopping_list_" + d + ".csv"})
+    return Response(data, mimetype="text/plain", headers={"Content-Disposition": f"attachment;filename={form_data[1]}_shopping_list_" + d + ".csv"})
 
 
 @app.route("/api/add_meal_plan_to_shopping_list", methods=['POST'])
