@@ -77,7 +77,7 @@ def export_shopping_list(base_url, api_key, store):
     for item in compressed_list.items():
         product = parsed_products[item[0]]
         if product["store_id"] == store:
-            name = "\"" + product["name"].replace("*", "") + "\""
+            name = product["name"].replace("*", "")
             if name.lower() != "water":
                 product_group = "None"
                 product_group_id = product["product_group_id"]
