@@ -1,6 +1,7 @@
-from requests import post, get
 import hashlib
 import uuid
+
+from requests import get
 
 seed = '34b31789102a4f6d16cb7b7ee1558de7'
 

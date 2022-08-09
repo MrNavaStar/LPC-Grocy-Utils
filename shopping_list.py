@@ -1,6 +1,5 @@
-from requests import get
+from requests import get, post, put
 from datetime import datetime
-from requests import post, put
 
 
 def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):

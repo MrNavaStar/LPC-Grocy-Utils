@@ -4,9 +4,9 @@ from flask import Flask, render_template, Response, request, redirect
 
 import inventory
 import shopping_list
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 BASE_URL = os.environ.get("BASE_URL")
 API_KEY = os.environ.get("API_KEY")
 app = Flask("grocy-python", template_folder="web", static_folder="web")
@@ -46,4 +46,4 @@ def export_inventory_template():
 
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000)
