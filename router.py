@@ -3,7 +3,9 @@ from datetime import date
 from flask import Flask, render_template, Response, request, redirect, make_response
 import app.login as lg
 from app import shopping_list, inventory
+#from dotenv import load_dotenv
 
+#load_dotenv()
 BASE_URL = os.environ.get("BASE_URL") + "/api"
 app = Flask("grocy-python", template_folder="web", static_folder="web")
 
@@ -18,7 +20,10 @@ def index():
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    cookie = request.cookies.get("grocy_session")
+    if cookie is None:
+        return render_template("login.html")
+    return redirect("/")
 
 
 @app.route("/api/login", methods=['POST'])
