@@ -1,15 +1,10 @@
 import os
 from datetime import date
 from flask import Flask, render_template, Response, request, redirect, make_response
-import login as lg
+import app.login as lg
+from app import shopping_list, inventory
 
-import inventory
-import shopping_list
-from dotenv import load_dotenv
-
-load_dotenv()
-BASE_URL = os.environ.get("BASE_URL")
-API_KEY = os.environ.get("API_KEY")
+BASE_URL = os.environ.get("BASE_URL") + "/api"
 app = Flask("grocy-python", template_folder="web", static_folder="web")
 
 
