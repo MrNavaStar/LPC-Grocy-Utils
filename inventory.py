@@ -1,9 +1,9 @@
 from requests import get
 
 
-def export_template(base_url, api_key):
+def export_template(base_url, cookie):
     headers = {
-        "GROCY-API-KEY": api_key,
+        "Cookie": "grocy_session=" + cookie,
         "Content-Type": "application/json"
     }
 

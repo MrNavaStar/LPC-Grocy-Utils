@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LPC Grocy Utilities</title>
+  <meta name="Ethan Stevenson" content="Grocy Things">
+
+  <meta property="og:title" content="LPC Grocy Utilities">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+  <form id="login" action="/api/login" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <label for="password">Password:</label>
+    <input type="text" id="password" name="password">
+    <input class="little_button" type="submit" value="Login"/>
+  </form>
+</body>
+</html>

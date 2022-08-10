@@ -2,10 +2,10 @@ from requests import get, post, put
 from datetime import datetime
 
 
-def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
+def add_meal_plan_to_shopping_list(base_url, cookie, start_date, end_date):
     headers = {
-        "GROCY-API-KEY": api_key,
-        "Content-Type": "application/json"
+        "Cookie": "grocy_session=" + cookie,
+        "Content-Type": "application/json",
     }
 
     data = {
@@ -35,11 +35,13 @@ def add_meal_plan_to_shopping_list(base_url, api_key, start_date, end_date):
     return None
 
 
-def export_shopping_list(base_url, api_key, store):
+def export_shopping_list(base_url, cookie, store):
     headers = {
-        "GROCY-API-KEY": api_key,
+        "Cookie": "grocy_session=" + cookie,
         "Content-Type": "application/json"
     }
+
+    print(headers)
 
     shopping_list = get(f"{base_url}/objects/shopping_list", headers=headers).json()
     units = get(f"{base_url}/objects/quantity_units", headers=headers).json()
@@ -101,9 +103,9 @@ def export_shopping_list(base_url, api_key, store):
     return data
 
 
-def get_stores(base_url, api_key):
+def get_stores(base_url, cookie):
     headers = {
-        "GROCY-API-KEY": api_key,
+        "Cookie": "grocy_session=" + cookie,
         "Content-Type": "application/json"
     }
 

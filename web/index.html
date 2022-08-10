@@ -78,10 +78,10 @@
 
   span.onclick = function() { modal.style.display = "none"; }
   window.onclick = function(event) {
-    if (event.target == create_modal) {
+    if (event.target === create_modal) {
       create_modal.style.display = "none";
     }
-    if (event.target == export_modal) {
+    if (event.target === export_modal) {
       export_modal.style.display = "none";
     }
   }
@@ -92,7 +92,7 @@
 
   var i = 0;
   function move() {
-    if (i == 0) {
+    if (i === 0) {
       i = 1;
       var elem = document.getElementById("myBar");
       var width = 1;
