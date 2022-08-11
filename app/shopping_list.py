@@ -27,7 +27,8 @@ def add_meal_plan_to_shopping_list(base_url, cookie, start_date, end_date):
                     recipe_data = {"desired_servings": str(recipe['recipe_servings'])}
 
                     put(f"{base_url}/objects/recipes/{recipe_id}", json=recipe_data, headers=headers)
-                    post(f"{base_url}/recipes/{recipe_id}/add-not-fulfilled-products-to-shoppinglist", data=data, headers=headers)
+                    post(f"{base_url}/recipes/{recipe_id}/add-not-fulfilled-products-to-shoppinglist", data=data,
+                         headers=headers)
                     print(f"added Recipe {recipe_id} for {recipe_data['desired_servings']} servings to shopping list!")
 
     except ValueError:
@@ -40,8 +41,6 @@ def export_shopping_list(base_url, cookie, store):
         "Cookie": "grocy_session=" + cookie,
         "Content-Type": "application/json"
     }
-
-    print(headers)
 
     shopping_list = get(f"{base_url}/objects/shopping_list", headers=headers).json()
     units = get(f"{base_url}/objects/quantity_units", headers=headers).json()
@@ -78,14 +77,13 @@ def export_shopping_list(base_url, cookie, store):
     for item in compressed_list.items():
         product = parsed_products[item[0]]
         if product["store_id"] == store:
-            name = product["name"].replace("*", "")
+            name = '"' + product["name"].replace("*", "") + '"'  # in quotes to allow for commas in product names
             if name.lower() != "water":
                 product_group = "None"
                 product_group_id = product["product_group_id"]
                 if product_group_id != "":
                     product_group = parsed_product_groups[product_group_id]
 
-                print(name)
                 amount = item[1]["amount"]
                 unit = parsed_units[item[1]["unit"]]
                 unit_store = parsed_units[product["qu_id_purchase"]]
@@ -98,7 +96,8 @@ def export_shopping_list(base_url, cookie, store):
 
     data = ""
     for item in pretty_list.items():
-        data = data + item[0] + "," + str(round(item[1]["amount"], 1)) + "," + item[1]["unit"] + "," + item[1]["product_group"] + "\n"
+        data = data + item[0] + "," + str(round(item[1]["amount"], 1)) + "," + item[1]["unit"] + "," + item[1][
+            "product_group"] + "\n"
 
     return data
 
