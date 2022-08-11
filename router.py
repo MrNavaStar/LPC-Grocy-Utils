@@ -15,7 +15,7 @@ def index():
     cookie = request.cookies.get("grocy_session")
     if cookie is None:
         return redirect("/login")
-    return render_template("index.html", stores=shopping_list.get_stores(BASE_URL, cookie))
+    return render_template("index.html", stores=shopping_list.get_stores(BASE_URL, cookie), grocy_url=BASE_URL.replace("/api", ""))
 
 
 @app.route("/login")

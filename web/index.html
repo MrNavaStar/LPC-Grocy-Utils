@@ -11,12 +11,17 @@
   <meta property="og:type" content="website">
 
   <link rel="icon" href="/favicon.ico">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 
 <body class="center" style="background-color:#242526;">
+
+  <div class="header">
+    <a class="header-button" href="{{grocy_url}}" >Grocy</a>
+    <button class="header-button">Logout</button>
+  </div>
 
   <h1>LPC Grocy Utilities</h1>
   <button class="button" id="createShoppingListButton">Create Shopping List</button>
