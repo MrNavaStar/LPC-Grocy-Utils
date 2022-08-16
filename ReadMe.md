@@ -3,13 +3,15 @@ A simple application to make working with grocy easier.
 
 ## Set up
 
-Download the docker image from the github releases and run it with the following command:
+Download the docker image from the github releases and load it using:
+```comandline
+docker load lpcgrocyutils.tar
+```
+Then run it with:
+
 ```commandline
 docker run --name grocy-utils -e BASE_URL=https://your.server.com -p 5000:5000 lpcgrocyutils
 ```
-
-You will also need to set up a reverse proxy with some kind of authentication if you are opening this up to the internet 
-as the program currently has no auth built in.
 
 ## Misc
 
