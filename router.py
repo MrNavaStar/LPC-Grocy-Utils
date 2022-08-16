@@ -3,6 +3,7 @@ from datetime import date
 from flask import Flask, render_template, Response, request, redirect, make_response
 import app.login as lg
 from app import shopping_list, inventory
+from waitress import serve
 #from dotenv import load_dotenv
 
 #load_dotenv()
@@ -72,4 +73,4 @@ def export_inventory_template():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    serve(app, host="0.0.0.0", port=5000)

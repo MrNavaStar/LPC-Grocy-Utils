@@ -20,7 +20,7 @@ h1 {
   color: white;
   height: 50px;
   width: 60px;
-  padding:0;
+  padding:10px;
   margin: 0;
   background-color: #4CAF30;
   border: none;
@@ -136,13 +136,26 @@ h1 {
   to {opacity: 1}
 }
 
-.login {
+.container {
   padding-top: 200px;
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
   text-align: center;
   margin: 0;
+  padding: 20px;
+  border: #373737;
+  background: #373737;
+  border-radius: 10px;
   width: 400px;
   color: white;
   font-family: Arial, sans-serif;
+  font-size: 30px;
 }
 
 input[type=text], input[type=password] {
@@ -153,6 +166,8 @@ input[type=text], input[type=password] {
   border: 1px solid #ccc;
   box-sizing: border-box;
   text-align: center;
+  border-radius: 5px;
+  font-size: 25px;
 }
 
 #myProgress {

@@ -19,8 +19,8 @@
 <body class="center" style="background-color:#242526;">
 
   <div class="header">
-    <a class="header-button" href="{{grocy_url}}" >Grocy</a>
-    <button class="header-button">Logout</button>
+    <button id="grocy">Grocy</button>
+    <button id="logout">Logout</button>
   </div>
 
   <h1>LPC Grocy Utilities</h1>
@@ -71,6 +71,9 @@
   var export_modal = document.getElementById("exportShoppingListModal");
   var export_btn = document.getElementById("exportShoppingListButton");
 
+  var logout_btn = document.getElementById("logout")
+  var grocy_btn = document.getElementById("grocy")
+
   var span = document.getElementsByClassName("close")[0];
 
   create_btn.onclick = function() {
@@ -79,6 +82,14 @@
 
   export_btn.onclick = function() {
     export_modal.style.display = "block";
+  }
+
+  logout_btn.onclick = function() {
+    window.location.replace("/api/logout");
+  }
+
+  grocy_btn.onclick = function() {
+    window.open("{{grocy_url}}");
   }
 
   span.onclick = function() { modal.style.display = "none"; }
