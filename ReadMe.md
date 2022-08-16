@@ -12,6 +12,7 @@ Then run it with:
 ```commandline
 docker run --name grocy-utils -e BASE_URL=https://your.server.com -p 5000:5000 lpcgrocyutils
 ```
+Your.server.com is the url to your grocy instance.
 
 ## Misc
 
